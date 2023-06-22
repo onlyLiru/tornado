@@ -1,0 +1,21 @@
+{
+  "private": true,
+  "author": "Tony <only_liru@qq.com>",
+  "scripts": {
+    "dev": "umi dev",
+    "build": "umi build",
+    "postinstall": "umi setup",
+    "setup": "umi setup",
+    "start": "npm run dev"
+  },
+  "dependencies": {
+    "@umijs/plugin-antd-mobile": "^1.2.0",
+    "antd-mobile": "^5.31.1",
+    "umi": "^4.0.71"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.33",
+    "@types/react-dom": "^18.0.11",
+    "typescript": "^5.0.3"
+  }
+}
