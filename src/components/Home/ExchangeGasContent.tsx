@@ -4,18 +4,11 @@ import AmountSlider from './AmountSlider';
 import DirectionIcon from '@/assets/direction@2x.png';
 import Dollar from '@/assets/dollar@2x.png';
 import Eth from '@/assets/eth.png';
-import { ExchangeInterface } from '@/interfaces/deposit';
-import { useState } from 'react';
+import store from '@/store';
 
-interface IProps {
-  exchange: ExchangeInterface;
-  handleChangeUsdc: (val: string) => void;
-}
-
-export default (props: IProps) => {
-  const { usdc, eth } = props.exchange;
-  const [val, setVal] = useState<string>(String(usdc));
-    const [ethVal, setEthVal] = useState<number>(eth);
+export default () => {
+  const [depositState, depositDispatchers] = store.useModel('deposit');
+  const { usdc, eth } = depositState.exchange;
 
   return (
     <>
@@ -30,11 +23,10 @@ export default (props: IProps) => {
               <Space align="center">
                 <span>
                   <Input
-                    placeholder="请输入内容"
-                    value={val}
+                    placeholder=""
+                    value={String(usdc)}
                     onChange={(v) => {
-                      setVal(v);
-                      setEthVal(Number(v) / 1000);
+                      depositDispatchers.updateExchange({ usdc: v });
                     }}
                     className={styles.inputNumber}
                     type="number"
@@ -50,7 +42,7 @@ export default (props: IProps) => {
             <Space block justify="between" align="center">
               <Avatar src={Eth} fit="contain" style={{ '--size': '2rem' }} />
               <Space>
-                <span>{ethVal}</span>
+                <span>{eth}</span>
                 <span style={{ color: '#666' }}>ETH</span>
               </Space>
             </Space>
