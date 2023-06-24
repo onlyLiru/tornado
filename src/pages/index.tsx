@@ -1,18 +1,12 @@
 import { definePageConfig } from 'ice';
-import { Button, Card, Grid, Space, Image, List, Avatar } from 'antd-mobile';
+import { Card, Grid, Space } from 'antd-mobile';
 import styles from '@/pages/index.module.css';
-import Logo from '../assets/metamask-logo.svg';
 import Wallet from '@/components/Home/Wallet';
 import ThemeSwitch from '@/components/Home/ThemeSwitch';
 import Deposit from '@/components/Home/Deposit';
 import TransferRecord from '@/components/Home/TransferRecord';
-import { useEffect } from 'react';
 
 export default function IndexPage() {
-  useEffect(() => {
-      // userDispatchers.getUserInfo();
-      // setTimeout(() => { themeDispatchers.updateTheme('dark'); }, 1000);
-    }, []);
   return (
     <Space
       {...{ block: true, direction: 'vertical', className: styles.container }}
@@ -40,8 +34,17 @@ export default function IndexPage() {
   );
 }
 
-export const pageConfig = definePageConfig(() => {
-  return {
-    auth: ['admin', 'user'],
-  };
-});
+export const pageConfig = definePageConfig(() => ({
+  title: 'Home',
+  metas: [
+    { charset: 'utf-8' },
+    {
+      name: 'viewport',
+      content: 'width=device-width, initial-scale=1.0',
+    },
+    {
+      title: 'Something cool',
+      description: 'This becomes the nice preview on search results.',
+    },
+  ],
+}));

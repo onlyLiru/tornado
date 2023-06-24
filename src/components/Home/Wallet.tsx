@@ -1,11 +1,21 @@
 import styles from './home.module.css';
-import { Button, Grid, Space, CheckList, List, Avatar, Dialog } from 'antd-mobile';
+import {
+  Button,
+  Toast,
+  Space,
+  CheckList,
+  List,
+  Avatar,
+  Dialog,
+} from 'antd-mobile';
 import { RightOutline, GlobalOutline } from 'antd-mobile-icons';
 import store from '@/store';
-
+import { formatString } from '@/utils';
+import Web3Utils from '@/utils/web3';
 
 export default () => {
   const [depositState, depositDispatchers] = store.useModel('deposit');
+  const { account } = depositState;
   let DialogInstance: any = null;
 
   const list = (
@@ -16,8 +26,22 @@ export default () => {
       <CheckList
         value={[depositState.walletType]}
         style={{ '--border-bottom': '0', '--border-top': '0' }}
-        onChange={(v) => {
+        onChange={async (v) => {
+          if (!v.length) {
+            DialogInstance?.close && DialogInstance.close();
+            return;
+          }
+
           depositDispatchers.updateWalletType(v[0]);
+
+          if (Web3Utils[v[0]]) {
+            const account = await Web3Utils[v[0]]();
+            if (account) {
+              depositDispatchers.updateAccount(account);
+            }
+          } else {
+            Toast.show('在路上、马上到');
+          }
           DialogInstance?.close && DialogInstance.close();
         }}
       >
@@ -72,13 +96,10 @@ export default () => {
     <div onClick={handleClick}>
       <List style={{ border: 'none' }}>
         <List.Item
-          prefix={<Avatar
-            src=""
-            style={{ borderRadius: '100%' }}
-          />}
+          prefix={<Avatar src="" style={{ borderRadius: '100%' }} />}
           description="SeretRPC"
         >
-          3XHX…GWGS
+          {formatString(account)}
         </List.Item>
       </List>
     </div>

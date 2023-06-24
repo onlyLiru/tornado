@@ -1,5 +1,20 @@
 @import "./reset.css";
 :root:root {
     --adm-color-primary: #31b7d3;
+}
+
+/* 设置页面宽度为移动设备宽度 */
+body {
+  max-width: 100%;
+  min-width: 375px;
+}
+
+/* 桌面端样式 */
+
+@media (min-width: 768px) {
+  body {
+    max-width: 600px;
+    margin: 0 auto; 
   }
+}
   

@@ -5,6 +5,7 @@ import { createModel } from 'ice';
 
 export default createModel({
   state: {
+    account: 'Account',
     currentTab: 'deposit',
     currency: 'ETH',
     walletType: 'ImToken',
@@ -17,6 +18,9 @@ export default createModel({
     },
   } as DepositInterface,
   reducers: {
+    updateAccount(prevState: DepositInterface, payload) {
+      prevState.account = payload;
+    },
     updateTab(prevState: DepositInterface, payload) {
       prevState.currentTab = payload === 'deposit' ? 'widthdraw' : 'deposit';
     },

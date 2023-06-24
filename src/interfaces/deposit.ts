@@ -13,4 +13,5 @@ export interface DepositInterface {
     exchange: ExchangeInterface;
     amountList: number[];
     amount: amountType;
+    account: string;
   }
