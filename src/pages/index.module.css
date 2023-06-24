@@ -56,7 +56,7 @@
       height: 1px;
       background-color: #ebedf0;
       position: relative;
-      top: 0.9rem;
+      top: .9rem;
       margin: 0 1rem;
     }
     .selector-item {
@@ -64,8 +64,8 @@
       z-index: 2;
       .dot {
         display: block;
-        width: 1.7rem;
-        height: 1.7rem;
+        width: 28px;
+        height: 28px;
         border-radius: 100%;
         background: #e1e5eb;
         border: 1px solid #798394;

@@ -82,7 +82,7 @@ export default class App extends Component {
 
   render() {
     const { isAtBottom, items, interval } = this.state;
-    console.log(items);
+
     return (
       <Card
         headerStyle={{

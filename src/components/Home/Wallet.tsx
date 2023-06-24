@@ -12,6 +12,7 @@ import { RightOutline, GlobalOutline } from 'antd-mobile-icons';
 import store from '@/store';
 import { formatString } from '@/utils';
 import Web3Utils from '@/utils/web3';
+import MetaMaskIcon from '@/assets/metamask.png';
 
 export default () => {
   const [depositState, depositDispatchers] = store.useModel('deposit');
@@ -96,7 +97,18 @@ export default () => {
     <div onClick={handleClick}>
       <List style={{ border: 'none' }}>
         <List.Item
-          prefix={<Avatar src="" style={{ borderRadius: '100%' }} />}
+          prefix={
+            <Avatar
+              src={MetaMaskIcon}
+              style={{
+                borderRadius: '100%',
+                background: '#EFF4FA',
+                padding: '10px',
+                boxSizing: 'border-box',
+              }}
+              fit="fill"
+            />
+          }
           description="SeretRPC"
         >
           {formatString(account)}
