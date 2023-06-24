@@ -1,9 +1,9 @@
 import styles from './home.module.css';
-import { Space, Dialog, CheckList } from 'antd-mobile';
+import { Space, Dialog, CheckList, Avatar } from 'antd-mobile';
 import classNames from 'classnames/bind';
-import { useState } from 'react';
 import { RightOutline, GlobalOutline } from 'antd-mobile-icons';
 import store from '@/store';
+import Dollar from '@/assets/dollar@2x.png';
 
 let cx = classNames.bind(styles);
 
@@ -32,7 +32,7 @@ export default () => {
         </CheckList.Item>
         <CheckList.Item value="ETH">
           <Space>
-            <GlobalOutline />
+            <Avatar src={Dollar} fit="contain" style={{ '--size': '1.5rem' }} />
             <span>ETH</span>
           </Space>
         </CheckList.Item>
@@ -69,8 +69,8 @@ export default () => {
       })}
       onClick={handleClick}
     >
-      <Space>
-        <GlobalOutline />
+      <Space align="center">
+        <Avatar src={Dollar} fit="contain" style={{ '--size': '1.3rem' }} />
         {depositState.currency}
       </Space>
       <span>

@@ -1,4 +1,4 @@
-import { Button, Space, Image, Dialog, Result } from 'antd-mobile';
+import { Button, Space, Image } from 'antd-mobile';
 import styles from '@/pages/index.module.css';
 import AmountSelector from './AmountSelector';
 import CurrencySelector from './CurrencySelector';

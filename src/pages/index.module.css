@@ -42,6 +42,7 @@
     @media (min-width: 468px) {
       .inner {
         border-width: 0.120rem;
+        padding-top: 3rem;
       }
     }
     .tab {
