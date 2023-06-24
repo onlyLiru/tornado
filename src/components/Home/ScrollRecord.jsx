@@ -5,6 +5,7 @@ import { AntOutline, RedoOutline } from 'antd-mobile-icons';
 
 import ScrollableFeed from 'react-scrollable-feed';
 import { RandomColorGenerator } from './random-color-generator';
+import { generateRandomNumber, generateRandomHex } from '@/utils';
 
 export default class App extends Component {
   static intervalDelay = 1800;
@@ -17,12 +18,7 @@ export default class App extends Component {
 
   state = {
     isAtBottom: true,
-    items: [
-      this.createItem(),
-      this.createItem(),
-      this.createItem(),
-      this.createItem(),
-    ],
+    items: new Array(10).fill(0).map(() => this.createItem()),
     interval: undefined,
   };
 
@@ -36,6 +32,9 @@ export default class App extends Component {
     return {
       timestamp: new Date().toISOString(),
       color: RandomColorGenerator.get(),
+      address: generateRandomHex(),
+      amount: generateRandomNumber(0.1, 100, 2),
+      time: generateRandomNumber(1, 60, 0),
     };
   }
 
@@ -65,6 +64,12 @@ export default class App extends Component {
     this.setState((_) => ({
       items: [],
     }));
+
+    setTimeout(() => {
+      this.setState((_) => ({
+        items: new Array(10).fill(0).map(() => this.createItem()),
+      }));
+    }, 1000);
   }
 
   scrollToBottom() {
@@ -77,13 +82,22 @@ export default class App extends Component {
 
   render() {
     const { isAtBottom, items, interval } = this.state;
+    console.log(items);
     return (
       <Card
         headerStyle={{
           fontSize: '1.2rem',
         }}
         extra={<RedoOutline onClick={() => this.clear()} />}
-        title={<div style={{ fontSize: '1.2rem', fontWeight: 'normal' }}>今日<span style={{ color: '#31b7d3', margin: '0 2px' }}>{(items.length || 0) + 76589}</span>用户存款</div>}
+        title={
+          <div style={{ fontSize: '1.2rem', fontWeight: 'normal' }}>
+            今日
+            <span style={{ color: '#31b7d3', margin: '0 2px' }}>
+              {(items.length || 0) + 76589}
+            </span>
+            用户存款
+          </div>
+        }
         style={{ borderRadius: '20px' }}
       >
         <div className={styles['scrollable-wrapper']}>
@@ -97,13 +111,11 @@ export default class App extends Component {
                 {...{ block: true, justify: 'around' }}
                 style={{ '--gap': '24px', height: '2.5rem' }}
               >
-                <div className={styles.item}>
-                  {Math.random().toString().substring(3, 12)}
-                </div>
-                <div className={styles.item}>25分钟前</div>
-                <div className={styles.item}>0.1ETH</div>
+                <div className={styles.item}>{item.address}</div>
+                <div className={styles.item}>{item.time}分钟前</div>
+                <div className={styles.item}>{item.amount}ETH</div>
               </Space>
-              ))}
+            ))}
           </ScrollableFeed>
         </div>
         {/* <div className="text-center">
