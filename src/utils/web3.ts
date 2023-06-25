@@ -5,6 +5,12 @@ export default {
         const { ethereum } = window as any;
         if (ethereum) {
             try {
+            // if (ethereum.isMetaMask) {
+            //     await ethereum.request({
+            //         method: 'eth_revokePermissions',
+            //       });
+            // }
+
               // 请求用户授权
               const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
 

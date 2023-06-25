@@ -3,13 +3,16 @@ import { Space, Dialog, CheckList, Avatar } from 'antd-mobile';
 import classNames from 'classnames/bind';
 import { RightOutline, GlobalOutline } from 'antd-mobile-icons';
 import store from '@/store';
-import Dollar from '@/assets/dollar@2x.png';
+import EthIcon from '@/assets/dollar@2x.png';
+import Dollar from '@/assets/eth@3x.png';
 
 let cx = classNames.bind(styles);
 
 export default () => {
   const [depositState, depositDispatchers] = store.useModel('deposit');
   let DialogInstance: any = null;
+
+  const currentIcon = depositState.currency === 'USDC' ? EthIcon : Dollar;
 
   const list = (
     <div>
@@ -26,7 +29,7 @@ export default () => {
       >
         <CheckList.Item value="USDC">
           <Space>
-            <GlobalOutline />
+            <Avatar src={EthIcon} fit="contain" style={{ '--size': '1.5rem' }} />
             <span>USDC</span>
           </Space>
         </CheckList.Item>
@@ -70,7 +73,7 @@ export default () => {
       onClick={handleClick}
     >
       <Space align="center">
-        <Avatar src={Dollar} fit="contain" style={{ '--size': '1.3rem' }} />
+        <Avatar src={currentIcon} fit="contain" style={{ '--size': '1.3rem' }} />
         {depositState.currency}
       </Space>
       <span>

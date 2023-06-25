@@ -1,6 +1,5 @@
 import styles from './home.module.css';
 import {
-  Button,
   Toast,
   Space,
   CheckList,
@@ -13,6 +12,8 @@ import store from '@/store';
 import { formatString } from '@/utils';
 import Web3Utils from '@/utils/web3';
 import MetaMaskIcon from '@/assets/metamask.png';
+import MetaMask from '@/assets/metamask@2x.png';
+import TrxIcon from '@/assets/trx@2x.png';
 
 export default () => {
   const [depositState, depositDispatchers] = store.useModel('deposit');
@@ -47,26 +48,26 @@ export default () => {
         }}
       >
         <CheckList.Item value="MetaMask">
-          <Space>
-            <GlobalOutline />
+          <Space align="center">
+            <Avatar src={MetaMask} fit="contain" style={{ '--size': '2rem' }} />
             <span>MetaMask</span>
           </Space>
         </CheckList.Item>
         <CheckList.Item value="TronLink">
-          <Space>
-            <GlobalOutline />
+          <Space align="center">
+            <Avatar src={TrxIcon} fit="contain" style={{ '--size': '2rem' }} />
             <span>TronLink</span>
           </Space>
         </CheckList.Item>
         <CheckList.Item value="WalletConnect">
-          <Space>
-            <GlobalOutline />
+          <Space align="center">
+            <Avatar src={MetaMaskIcon} fit="contain" style={{ '--size': '1.5rem' }} />
             <span>WalletConnect</span>
           </Space>
         </CheckList.Item>
         <CheckList.Item value="ImToken">
-          <Space>
-            <GlobalOutline />
+          <Space align="center">
+            <Avatar src={MetaMaskIcon} fit="contain" style={{ '--size': '1.5rem' }} />
             <span>ImToken</span>
           </Space>
         </CheckList.Item>
