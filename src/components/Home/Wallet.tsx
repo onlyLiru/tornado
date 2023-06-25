@@ -7,7 +7,6 @@ import {
   Avatar,
   Dialog,
 } from 'antd-mobile';
-import { RightOutline, GlobalOutline } from 'antd-mobile-icons';
 import store from '@/store';
 import { formatString } from '@/utils';
 import Web3Utils from '@/utils/web3';
