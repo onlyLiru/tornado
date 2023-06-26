@@ -1,0 +1,16 @@
+  .scrollable-wrapper {
+    .item {
+      width: 5rem;
+      /* height: 1rem; */
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+      font-size: 1.1rem;
+      color: darkgray;
+    }
+    @media (min-width: 468px) {
+      .item {
+        width: 9rem;
+      }
+    }
+  }

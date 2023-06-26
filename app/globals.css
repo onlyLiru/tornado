@@ -1,0 +1,35 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url("./reset.css");
+
+:root:root {
+  --adm-color-primary: #31b7d3;
+}
+
+/* 设置页面宽度为移动设备宽度 */
+body {
+  box-sizing: border-box;
+  max-width: 100%;
+  min-width: 375px;
+  /* height: 100vh; */
+}
+
+/* 桌面端样式 */
+
+@media (min-width: 768px) {
+  body {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+}
+
+.wallet-box {
+  .adm-list-body {
+    border: none !important;
+  }
+  .adm-list-item {
+    padding-left: 0 !important;
+  }
+}
