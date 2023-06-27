@@ -2,7 +2,6 @@
 
 import styles from "@/app/home.module.css";
 import { Toast, Space, CheckList, List, Avatar, Dialog } from "antd-mobile";
-// import store from "@/store";
 import { formatString } from "@/utils";
 import Web3Utils from "@/utils/web3";
 import MetaMaskIcon from "@/public/metamask.png";
@@ -37,11 +36,11 @@ export default function Wallet() {
           });
 
           if (Web3Utils[value]) {
-            const account = await Web3Utils[value]();
-            if (account) {
+            const res = await Web3Utils[value]();
+            if (res?.accounts) {
               setWallet({
                 ...wallet,
-                account,
+                account: res?.accounts[0],
               });
             }
           } else {

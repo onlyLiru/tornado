@@ -35,7 +35,7 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "build/types/**/*.ts"
-  ],
+, "utils/tornado.js"  ],
   "exclude": [
     "node_modules"
   ]

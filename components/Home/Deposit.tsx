@@ -7,6 +7,10 @@ import CurrencySelector from "./CurrencySelector";
 import depositIcon from "@/public/deposit@2x.png";
 import withdrawIcon from "@/public/withdraw@2x.png";
 import ExchangeGas from "./ExchangeGas";
+import { walletState } from "@/recoil/wallet";
+import Web3Utils from "@/utils/web3";
+import { createInvoice } from "@/utils/tornado";
+// import { createInvoice } from "@/utils/cli-ts";
 
 import { useRecoilState } from "recoil";
 import { depositState as deposit } from "@/recoil/deposit";
@@ -15,17 +19,36 @@ export default function Deposit() {
   const [depositState, setDepositState] = useRecoilState(deposit);
   const { amount, exchange: exchangeState } = depositState;
 
+  const [wallet, setWallet] = useRecoilState(walletState);
+
   const handleExchangeGas = () => {
     setDepositState({
       ...depositState,
       exchange: { ...exchangeState, isShowDialog: true },
     });
   };
-  console.log(depositState.currentTab);
 
   const handleDeposit = () => {
-    handleExchangeGas();
+    // handleExchangeGas();
+    if (depositState.currentTab === "deposit") {
+      startDeposit();
+    }
   };
+
+  const startDeposit = async () => {
+    // to do
+    if (wallet.type && wallet.account === "Account") {
+      console.log(typeof Web3Utils[wallet.type]);
+      const res = await Web3Utils[wallet.type]();
+      console.log(res);
+    }
+    const chainId = await (window as any).web3.eth.getChainId();
+    const account = (await (window as any).web3.eth.getAccounts())[0];
+    console.log(chainId, account, depositState.amount, depositState.currency);
+    const result = await createInvoice({ currency: "eth", amount: 1, chainId: 233 })
+    console.log(result)
+  };
+
   const handleChangeTab = (tab: any) => {
     setDepositState({
       ...depositState,
@@ -34,8 +57,6 @@ export default function Deposit() {
   };
 
   const text = depositState.currentTab === "deposit" ? "存入" : "提取";
-
-  console.log(depositState);
 
   return (
     <div className={styles.deposit}>
