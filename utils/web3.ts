@@ -1,6 +1,6 @@
 import Web3 from "web3";
-import sigUtil from 'eth-sig-util'
-import ethUtil from 'ethereumjs-util'
+import sigUtil from "eth-sig-util";
+import ethUtil from "ethereumjs-util";
 
 interface IWeb3Utils {}
 
@@ -10,15 +10,15 @@ export default {
     if (ethereum) {
       try {
         // 请求用户授权
-        // const accounts = await ethereum.request({
-        //   method: "eth_requestAccounts",
-        // });
+        const accounts = await ethereum.request({
+          method: "eth_requestAccounts",
+        });
 
         // 创建 Web3 实例
-        // const web3 = new Web3(ethereum);
-        const web3 = new Web3(
-          new Web3.providers.HttpProvider("http://localhost:7545")
-        );
+        const web3 = new Web3(ethereum);
+        // const web3 = new Web3(
+        //   new Web3.providers.HttpProvider("http://localhost:7545")
+        // );
 
         (window as any).web3 = web3;
 
@@ -49,7 +49,7 @@ export default {
         return {
           web3,
           chainId,
-          accounts: accountsGanache,
+          accounts: accounts,
         };
       } catch (error) {
         console.error("Error connecting to wallet:", error);

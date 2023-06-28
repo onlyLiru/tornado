@@ -28,23 +28,30 @@ export default function Wallet() {
             return;
           }
 
-          const value = v[0];
-
-          setWallet({
-            ...wallet,
-            type: v[0] as any,
-          });
+          const value: any = v[0];
 
           if (Web3Utils[value]) {
             const res = await Web3Utils[value]();
+            console.log(res);
             if (res?.accounts) {
               setWallet({
                 ...wallet,
                 account: res?.accounts[0],
+                type: value,
+              });
+            } else {
+              setWallet({
+                ...wallet,
+                type: "",
+                account: "",
               });
             }
           } else {
-            Toast.show("在路上、马上到");
+            setWallet({
+              ...wallet,
+              type: "",
+              account: "",
+            });
           }
           DialogInstance?.close && DialogInstance.close();
         }}
@@ -130,7 +137,7 @@ export default function Wallet() {
           }
           description="SeretRPC"
         >
-          {formatString(wallet.account)}
+          {wallet?.account ? formatString(wallet?.account) : "No Connected"}
         </List.Item>
       </List>
     </div>
