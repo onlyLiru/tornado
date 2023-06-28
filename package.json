@@ -20,6 +20,7 @@
     "big-number": "^2.0.0",
     "binary-loader": "^0.0.1",
     "circomlibjs": "^0.1.7",
+    "copy-to-clipboard": "^3.3.3",
     "crypto": "^1.0.1",
     "eslint": "8.43.0",
     "eslint-config-next": "13.4.7",

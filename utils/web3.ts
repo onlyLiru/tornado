@@ -16,39 +16,10 @@ export default {
 
         // 创建 Web3 实例
         const web3 = new Web3(ethereum);
-        // const web3 = new Web3(
-        //   new Web3.providers.HttpProvider("http://localhost:7545")
-        // );
-
         (window as any).web3 = web3;
 
-        const chainId = await web3.eth.getChainId();
-        console.log("chainId:", chainId);
-
-        const accountsGanache = await web3.eth.getAccounts();
-        // console.log(accountsGanache);
-
-        // console.log(
-        //   await ethereum.request({
-        //     method: "eth_requestAccounts",
-        //   })
-        // );
-
-        // 获取用户的以太坊地址
-        // const account = accounts[0];
-
-        // console.log("Connected account:", account);
-        // console.log(
-        //   await ethereum.request({
-        //     method: "eth_getBalance",
-        //     params: [account, "latest"],
-        //   })
-        // );
-
-        // this.VisitContract(account);
         return {
           web3,
-          chainId,
           accounts: accounts,
         };
       } catch (error) {

@@ -1,15 +1,18 @@
 "use client";
 
-import { Button, Space, Image } from "antd-mobile";
+import { Button, Space, Image, Toast, Dialog } from "antd-mobile";
 import styles from "@/app/index.module.css";
 import AmountSelector from "./AmountSelector";
 import CurrencySelector from "./CurrencySelector";
+import DepositTipContent from "./DepositTipContent";
+import DepositResultContent from "./DepositResultContent";
 import depositIcon from "@/public/deposit@2x.png";
 import withdrawIcon from "@/public/withdraw@2x.png";
 import ExchangeGas from "./ExchangeGas";
 import { walletState } from "@/recoil/wallet";
 import Web3Utils from "@/utils/web3";
 import { startDeposit } from "@/utils/deposit";
+import copy from "copy-to-clipboard";
 // import { withdraw } from "@/utils/withdraw";
 import withdrawCircuit from "@/circuits/withdraw.json";
 import tornadoProvingKey from "!!binary-loader!@/circuits/tornadoProvingKey.bin";
@@ -31,12 +34,39 @@ export default function Deposit() {
     });
   };
 
-  const handleDeposit = () => {
+  const handleDeposit = async () => {
     // handleExchangeGas();
+    if (!wallet.account || !wallet.type) {
+      return Toast.show("请链接钱包");
+    }
     if (depositState.currentTab === "deposit") {
-      startDeposit({ amount, account: wallet.account });
+      showDepositTip();
+    } else {
+      alert("withdraw");
     }
   };
+
+  const showDepositTip = async () => {
+    Dialog.confirm({
+      content: <DepositTipContent {...wallet} {...{ amount }} />,
+      cancelText: "我再想想",
+      confirmText: "确定存款",
+      onConfirm: async () => {
+        const note = await startDeposit({ amount, account: wallet.account });
+        console.log(note);
+        Dialog.alert({
+          content: <DepositResultContent noteString={note} />,
+          onConfirm: () => {
+            copy(note);
+            localStorage.setItem("noteString", note);
+            Toast.show("复制成功");
+          },
+        });
+      },
+    });
+  };
+
+  const showDepositResult = () => {};
 
   const handleChangeTab = (tab: any) => {
     setDepositState({

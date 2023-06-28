@@ -1,0 +1,16 @@
+{
+  "_format": "hh-sol-artifact-1",
+  "contractName": "ReentrancyGuard",
+  "sourceName": "contracts/TornadoCash_erc20.sol",
+  "abi": [
+    {
+      "inputs": [],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    }
+  ],
+  "bytecode": "0x6080604052348015600f57600080fd5b506001600055603f8060226000396000f3fe6080604052600080fdfea26469706673582212207eecdcd9d6bd97bc337b381852dda6cabde6d40d94e2f7c668135a25b6c2a66264736f6c63430008000033",
+  "deployedBytecode": "0x6080604052600080fdfea26469706673582212207eecdcd9d6bd97bc337b381852dda6cabde6d40d94e2f7c668135a25b6c2a66264736f6c63430008000033",
+  "linkReferences": {},
+  "deployedLinkReferences": {}
+}
