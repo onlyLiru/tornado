@@ -1,5 +1,3 @@
-"use client";
-
 import { Button, Space, Image, Toast, Dialog } from "antd-mobile";
 import styles from "@/app/index.module.css";
 import AmountSelector from "./AmountSelector";
@@ -13,19 +11,16 @@ import { walletState } from "@/recoil/wallet";
 import Web3Utils from "@/utils/web3";
 import { startDeposit } from "@/utils/deposit";
 import copy from "copy-to-clipboard";
-// import { withdraw } from "@/utils/withdraw";
-import withdrawCircuit from "@/circuits/withdraw.json";
-import tornadoProvingKey from "!!binary-loader!@/circuits/tornadoProvingKey.bin";
-import withdrawProvingKey from "!!binary-loader!@/circuits/withdraw_proving_key.bin";
+import WithDrawTabContent from "./WithDrawTabContent";
 
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { depositState as deposit } from "@/recoil/deposit";
 
 export default function Deposit() {
   const [depositState, setDepositState] = useRecoilState(deposit);
   const { amount, exchange: exchangeState } = depositState;
 
-  const [wallet, setWallet] = useRecoilState(walletState);
+  const wallet = useRecoilValue(walletState);
 
   const handleExchangeGas = () => {
     setDepositState({
@@ -42,7 +37,7 @@ export default function Deposit() {
     if (depositState.currentTab === "deposit") {
       showDepositTip();
     } else {
-      alert("withdraw");
+      // withdraw(localStorage.getItem("noteString"), wallet.account);
     }
   };
 
@@ -54,19 +49,21 @@ export default function Deposit() {
       onConfirm: async () => {
         const note = await startDeposit({ amount, account: wallet.account });
         console.log(note);
-        Dialog.alert({
-          content: <DepositResultContent noteString={note} />,
-          onConfirm: () => {
-            copy(note);
-            localStorage.setItem("noteString", note);
-            Toast.show("复制成功");
-          },
-        });
+        showDepositResult({ note });
       },
     });
   };
 
-  const showDepositResult = () => {};
+  const showDepositResult = ({ note }: { note: string }) => {
+    Dialog.alert({
+      content: <DepositResultContent noteString={note} />,
+      onConfirm: () => {
+        copy(note);
+        localStorage.setItem("noteString", note);
+        Toast.show("复制成功");
+      },
+    });
+  };
 
   const handleChangeTab = (tab: any) => {
     setDepositState({
@@ -104,28 +101,32 @@ export default function Deposit() {
         </ul>
       </div>
       <div className={styles.inner}>
-        <Space
-          {...{
-            block: true,
-            direction: "vertical",
-            style: { "--gap": "24px" },
-          }}
-        >
-          <h3 className={styles.title}>代币</h3>
-          <CurrencySelector />
-          <h3 className={styles.title}>数额</h3>
-          <AmountSelector />
-          <Button
-            onClick={handleDeposit}
-            block
-            color="primary"
-            style={{ borderRadius: "1.5rem" }}
-            size="large"
+        {depositState.currentTab === "deposit" ? (
+          <Space
+            {...{
+              block: true,
+              direction: "vertical",
+              style: { "--gap": "24px" },
+            }}
           >
-            {text}
-            {amount} {depositState.currency}
-          </Button>
-        </Space>
+            <h3 className={styles.title}>代币</h3>
+            <CurrencySelector />
+            <h3 className={styles.title}>数额</h3>
+            <AmountSelector />
+            <Button
+              onClick={handleDeposit}
+              block
+              color="primary"
+              style={{ borderRadius: "1.5rem" }}
+              size="large"
+            >
+              {text}
+              {amount} {depositState.currency}
+            </Button>
+          </Space>
+        ) : (
+          <WithDrawTabContent />
+        )}
       </div>
       <ExchangeGas />
     </div>

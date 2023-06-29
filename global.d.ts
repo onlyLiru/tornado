@@ -1,1 +1,1 @@
-declare module "*.bin"
+// declare module "*.bin"

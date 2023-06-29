@@ -4,7 +4,7 @@ import circomlib from "@/circomlib";
 const bigInt = snarkjs.bigInt;
 
 /** Generate random number of specified byte length */
-const rbigint = (nbytes) =>
+export const rbigint = (nbytes) =>
   snarkjs.bigInt.leBuff2int(require("crypto").randomBytes(nbytes));
 
 /** Compute pedersen hash */
@@ -12,7 +12,7 @@ const pedersenHash = (data) =>
   circomlib.babyJub.unpackPoint(circomlib.pedersenHash.hash(data))[0];
 
 /** BigNumber to hex string of specified length */
-function toHex(number, length = 32) {
+export function toHex(number, length = 32) {
   const str =
     number instanceof Buffer
       ? number.toString("hex")
@@ -32,16 +32,25 @@ function rmDecimalBN(bigNum, decimals = 6) {
 /**
  * Create deposit object from secret and nullifier
  */
-function createDeposit({ nullifier, secret }) {
-  const deposit = { nullifier, secret };
+export function createDeposit({ nullifier, secret }) {
+  // const deposit = { nullifier, secret };
+  // deposit.preimage = Buffer.concat([
+  //   deposit.nullifier.leInt2Buff(31),
+  //   deposit.secret.leInt2Buff(31),
+  // ]);
+  // deposit.commitment = pedersenHash(deposit.preimage);
+  // deposit.commitmentHex = toHex(deposit.commitment);
+  // deposit.nullifierHash = pedersenHash(deposit.nullifier.leInt2Buff(31));
+  // deposit.nullifierHex = toHex(deposit.nullifierHash);
+  // return deposit;
+
+  let deposit = { nullifier, secret };
   deposit.preimage = Buffer.concat([
     deposit.nullifier.leInt2Buff(31),
     deposit.secret.leInt2Buff(31),
   ]);
   deposit.commitment = pedersenHash(deposit.preimage);
-  deposit.commitmentHex = toHex(deposit.commitment);
   deposit.nullifierHash = pedersenHash(deposit.nullifier.leInt2Buff(31));
-  deposit.nullifierHex = toHex(deposit.nullifierHash);
   return deposit;
 }
 
@@ -106,7 +115,7 @@ export const startDeposit = async ({ amount, account }) => {
   const chainId = await web3.eth.getChainId();
   const depositResult = await createInvoice({
     currency: "eth",
-    amount: 1,
+    amount,
     chainId: chainId,
   });
   return connectContractAndReturnNote({
@@ -122,7 +131,7 @@ const connectContractAndReturnNote = async (depositResult) => {
   const { amount, account, deposit, chainId: netId } = depositResult;
   const { commitment } = deposit;
 
-  const address = "0x2226c371DB81dfB421225f4811269Bb6801b8839";
+  const address = "0x1087C3ec5CA2C0B5c768F864C525ac8feE4983b6";
   const contract = new web3.eth.Contract(contractJson.abi, address);
 
   const tx = await contract.methods.deposit(toHex(commitment)).send({

@@ -27,6 +27,7 @@
     "eth-sig-util": "^3.0.1",
     "ethereumjs-util": "^7.1.5",
     "file-loader": "^6.2.0",
+    "fixed-merkle-tree": "^0.6.1",
     "next": "13.4.7",
     "poseidon-encryption": "^1.0.2",
     "postcss": "8.4.24",
